@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,65 +8,81 @@
     <title>Task</title>
     <link href="style.css" rel="stylesheet">
 </head>
+
 <body>
-    
-    <form> 
-    <div class = "flex"> 
-        <div>   
-       <label>Enter The Radius: </label> <br>
-       <input type = "text" id = "radius">
-      <button onclick = "Calculate()" >Calculate</button>
-     
-       <br><br>
-      <label for="volume">Volume: </label> <br>
-      <input type="text" name="volume" id="volume">
-         
-        <br>
+
+
+    <div class="flex">
+        <div>
+            <label>Enter The Radius: </label> <br>
+            <input type="text" id="radius">
+            <button onclick="Calculate()" >Calculate</button>
+
+            <br><br>
+            <label for="volume">Volume: </label> <br>
+            <input type="text" name="volume" id="volume">
+
+            <br>
+        </div>
+        <div>
+            <canvas id="Mcanvas" width="400px" height="400px" style="border: 1px solid black"></canvas>
+            <button onclick="Clearr()">Clear </button>
+        </div>
+        
     </div>
-    <div>
-    <canvas id ="Mcanvas" width = "400px" height="400px" style="border: 1px solid black"></canvas>
-    </div>
-</div>
-    
-<script>
-    
 
-function Calculate() {
-    var r = document.getElementById("radius").value;
-    if (isNaN(r)) {
-        alert ("Please enter a correct number");
-    } else {
-    var v = (4 * Math.PI * r**3)/3;
-    v = v.toFixed(4);
-    document.getElementById("volume").value = v;
-    drawCircle();
-         }
-         
-      }
+    <script>
 
 
- 
-function drawCircle() {
-    var newCanvas = document.getElementById("Mcanvas");
-    var newContext = newCanvas.getContext("2d");
- 
-var canvasWidth = newCanvas.width;
-var canvasHeight = newCanvas.height;
+        function Calculate() {
+            var r = document.getElementById("radius").value;
+            if (isNaN(r)) {
+                alert("Please enter a correct number");
+            } else {
+                var v = (4 * Math.PI * r ** 3) / 3;
+                v = v.toFixed(4);
+                document.getElementById("volume").value = v;
+                drawCircle();
+            }
+
+        }
 
 
-    var r = document.getElementById("radius").value;
-    newContext.lineWidth = 20;
-    newContext.strokeStyle = '#FF0000';
-    newContext.stroke();
 
-    newContext.beginPath();
-    newContext.arc(200, 200, r, 0, 2 * Math.PI, false)
-    newContext.fillStyle = '#FF6A6A';
-    newContext.fill();
-}
+        function drawCircle() {
+            var r = document.getElementById("radius").value;
+
+            if (r > 200) {
+                alert("Too big radius");
+            } else {
+
+                var newCanvas = document.getElementById("Mcanvas");
+                var newContext = newCanvas.getContext("2d");
+
+                var canvasWidth = newCanvas.width;
+                var canvasHeight = newCanvas.height;
 
 
-        </script>
-    
+
+                newContext.lineWidth = 20;
+                newContext.strokeStyle = '#FF0000';
+                newContext.stroke();
+
+                newContext.beginPath();
+                newContext.arc(200, 200, r, 0, 2 * Math.PI, false)
+                newContext.fillStyle = '#FF6A6A';
+                newContext.fill();
+            }
+        }
+        function Clearr() {
+            var newCanvas = document.getElementById("Mcanvas");
+            var newContext = newCanvas.getContext("2d");
+        
+            newContext.clearRect(0, 0, 400, 400);
+        }
+
+    </script>
+
 </body>
+
 </html>
