@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Task Board</title>
+    <link href="style.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Finger Paint' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Barrio' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="title">My Task Board</div>
+    <div class="form">
+
+        <label>Task: <input type="text" id="task" autofocus></label><br><br>
+        <label>Date: <input type="date" id="date"> </label>
+        <label>Time: <input type="time" id="time"> </label> <br>
+        <div id="btns">
+            <button id="btn" onclick="getTask()" class="btn btn-primary">Save</button>
+            <button id="btn" onclick="ClearInputs()" class="btn btn-primary">Reset</button>
+        </div>
+
+    </div>
+    <div id="ptakim"></div>
+
+    <script>
+
+        window.onload = watchTasks;
+
+        var peteks = [];
+        var uTask = document.getElementById("task");
+        var uDate = document.getElementById("date");
+        var uTime = document.getElementById("time");
+
+        function getTask() {
+            if (uTask.value === "") {
+                alert('Please enter your task');
+                return;
+            }
+            if (uDate.value === "") {
+                alert('Please enter the date');
+                return;
+            }
+
+            var i = peteks.length;
+
+            var petek = document.createElement("div");
+            petek.className = "petek";
+            petek.id = i;
+            var ptak = document.querySelector("#ptakim");
+            ptak.appendChild(petek);
+
+            var textPetek = document.createElement("div");
+            textPetek.id = "textPetek";
+            textPetek.innerHTML = uTask.value;
+            petek.appendChild(textPetek);
+
+            var datePetek = document.createElement("div");
+            datePetek.id = "datePetek";
+            datePetek.innerHTML = `<p>${reverseDate(uDate.value)} <br>
+                                  ${uTime.value}</p>`;
+            petek.appendChild(datePetek);
+
+            var closebtn = document.createElement("span");
+            closebtn.className = "glyphicon glyphicon-remove-circle";
+            closebtn.id = "close";
+            closebtn.addEventListener("click", deletePetek, false);
+            petek.appendChild(closebtn);
+
+            SaveTask(i); i++;
+            ClearInputs();
+        }
+
+        function SaveTask(i) {
+            var task = `{"id": "${i}", "task": "${uTask.value}", "date": "${uDate.value}", "time": "${uTime.value}"}`;
+            task = JSON.parse(task);
+            peteks.push(task);
+
+            localStorage.setItem('tasks', JSON.stringify(peteks));
+        }
+
+        function deletePetek(event) {
+            var id = event.target.parentNode.getAttribute("id"); 
+            event.target.parentNode.remove();
+            deleteFromArray(id);
+        }
+
+        function deleteFromArray(pid) {
+
+            var temp = [];
+            for (var i = 0; i < peteks.length; i++) {
+                if (peteks[i].id !== pid) {
+                    temp.push(peteks[i]);
+                }
+            }
+            peteks = temp;
+            localStorage.setItem('tasks', JSON.stringify(peteks));
+        }
+
+
+        function reverseDate(n) {
+            return n.split('-').reverse().join('/');
+        }
+        function watchTasks() {
+            var missions = JSON.parse(localStorage.getItem('tasks'));
+
+            for (var i = 0; i < missions.length; i++) {
+
+                var savedPetek = document.createElement("div");
+                savedPetek.className = "petek";
+                savedPetek.id = missions[i].id;
+                var ptak = document.querySelector("#ptakim");
+                ptak.appendChild(savedPetek);
+
+                var StextPetek = document.createElement("div");
+                StextPetek.id = "textPetek";
+                StextPetek.innerText = missions[i].task;
+                savedPetek.appendChild(StextPetek);
+
+                var SdatePetek = document.createElement("div");
+                SdatePetek.id = "datePetek";
+                SdatePetek.innerHTML = `<p>${reverseDate(missions[i].date)} <br>
+                                       ${missions[i].time}</p>`;
+                savedPetek.appendChild(SdatePetek);
+
+                var Sclosebtn = document.createElement("span");
+                Sclosebtn.id = "close";
+                Sclosebtn.className = "glyphicon glyphicon-remove-circle";
+                Sclosebtn.addEventListener("click", deletePetek, false);
+                savedPetek.appendChild(Sclosebtn);
+            }
+            peteks = missions;
+        }
+
+        function ClearInputs() {
+            document.getElementById("task").value = "";
+            document.getElementById("date").value = "";
+            document.getElementById("time").value = "";
+        }
+    </script>
+</body>
+</html>

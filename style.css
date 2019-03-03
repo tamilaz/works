@@ -1,4 +1,97 @@
-.flex {
-    display: flex;
-    justify-content: space-around;
+.title {
+    font-size: 40px;
+    font-family: 'Barrio';
+    margin: 20px 39% 10px;
 }
+body {
+    background-image: url('tile.jpg');
+}
+
+.form {
+    
+    margin: 30px 25% 20px;
+    padding-top: 18px;
+    background-image: url('formbg.jpg');
+    font-family: 'Convergence';
+    font-size: 19px;
+
+    
+}
+
+#task {
+    width: 81%;
+    font-family: 'Convergence';
+    font-size: 19px;
+}
+
+#ptakim {
+     margin: 50px 6% 30px;
+     height: 500px;
+     display: flex;
+     flex-wrap: wrap;
+     font-family: 'Finger Paint';
+     font-size: 21px;
+}
+
+.petek {
+    position: relative;
+    width: 200px;
+    height: 255px;
+    background-image: url('notebg.png');
+    animation: fadeIn 2.5s; 
+
+
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+ } 
+
+#textPetek {
+    position: absolute;    
+    top: 40px;
+    left: 10px;  
+    height: 150px;
+    width: 150px;
+    overflow: auto;
+    padding: 1px;
+}
+
+#datePetek {
+    position: absolute;
+    top: 190px;
+    left: 10px;
+    height: 30px;
+    width: 150px;
+    padding: 1px;
+}
+
+#close {
+    position: absolute;
+    opacity: 0; 
+    top:25px;
+    right: 28px;
+    
+}
+.glyphicon {
+    font-size: 20px;
+}
+#close:hover {
+
+    opacity: 1;
+    cursor: pointer;
+}
+
+#btn {
+    height: 50px;
+    width: 150px;
+    font-size: 19px;
+    margin-top: 7px;
+    }
+
+#btns {
+    margin: 1px 26% 10px;
+
+}
+
